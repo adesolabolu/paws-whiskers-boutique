@@ -1678,7 +1678,7 @@ export default function App() {
                   className="relative rounded-boutique h-[260px] overflow-hidden group"
                 >
                   <img
-                    src="https://images.pexels.com/photos/16623514/pexels-photo-16623514/free-photo-of-cat-in-a-cat-tree.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=600&q=80"
                     alt="Lumina Feline Lounge"
                     referrerPolicy="no-referrer"
                     className="absolute inset-0 w-full h-full object-cover"
@@ -1721,7 +1721,7 @@ export default function App() {
                 </li>
                 <li className="relative rounded-boutique h-[260px] overflow-hidden">
                   <img
-                    src="https://images.pexels.com/photos/16623514/pexels-photo-16623514/free-photo-of-cat-in-a-cat-tree.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=600&q=80"
                     alt="Lumina Feline Suite"
                     referrerPolicy="no-referrer"
                     className="absolute inset-0 w-full h-full object-cover"
