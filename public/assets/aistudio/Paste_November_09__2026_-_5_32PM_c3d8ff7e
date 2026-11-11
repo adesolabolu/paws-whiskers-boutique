@@ -1,0 +1,924 @@
+Below is the component for your context <!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Paws &amp; Whiskers | Premium Pet Boutique &amp; Care</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&amp;family=Inter:wght@400;500;700&amp;family=Playfair+Display:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet">
+  <style>
+    .animate-on-scroll-hidden { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+    .animate-on-scroll-visible { opacity: 1; transform: translateY(0); }
+    
+    .bg-pattern-overlay {
+      background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+      opacity: 0.05;
+    }
+
+    .boutique-border {
+      border: 1.6px solid rgba(217, 119, 6, 0.1);
+    }
+
+    .text-split-hover {
+      display: flex;
+      flex-direction: column;
+      height: 1.2em;
+      overflow: hidden;
+    }
+    .text-split-hover span {
+      display: block;
+      line-height: 1.2em;
+      transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
+    .group:hover .text-split-hover span {
+      transform: translateY(-100%);
+    }
+
+    /* Custom Paw Cursor Global Application */
+    #app-root, #app-root * {
+      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='%23D97706'><path d='M12 14c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zm-6.5-4c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5zm13 0c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5zm-11-5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm9 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/></svg>") 16 16, auto !important;
+    }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #D97706; border-radius: 10px; }
+
+    .italic-style { font-family: 'Playfair Display', serif; font-style: italic; }
+
+    /* Footer Jumping Animation */
+    @keyframes jump {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-20px); }
+      60% { transform: translateY(-10px); }
+    }
+    .animate-jump span {
+      display: inline-block;
+      animation: jump 2.5s ease-in-out infinite;
+    }
+    .animate-jump span:nth-child(2) { animation-delay: 0.1s; }
+    .animate-jump span:nth-child(3) { animation-delay: 0.2s; }
+    .animate-jump span:nth-child(4) { animation-delay: 0.3s; }
+    .animate-jump span:nth-child(5) { animation-delay: 0.4s; }
+
+    /* Vertical Testimonial Scroll */
+    .mask-testimonial {
+      -webkit-mask-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 15%, rgb(0, 0, 0) 85%, rgba(0, 0, 0, 0) 100%);
+      mask-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 15%, rgb(0, 0, 0) 85%, rgba(0, 0, 0, 0) 100%);
+    }
+
+    @keyframes scroll-vertical {
+      from { transform: translateY(0); }
+      to { transform: translateY(-50%); }
+    }
+
+    @keyframes scroll-vertical-reverse {
+      from { transform: translateY(-50%); }
+      to { transform: translateY(0); }
+    }
+
+    .animate-scroll-v {
+      animation: scroll-vertical 45s linear infinite;
+    }
+
+    .animate-scroll-v-reverse {
+      animation: scroll-vertical-reverse 45s linear infinite;
+    }
+  </style>
+   
+<style type="text/tailwindcss">@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply m-0 p-0 antialiased;
+  }
+}</style><script src="https://cdn.tailwindcss.com"></script><script>tailwind.config = {
+  important: '#app-root',
+  theme: {
+    extend: {
+      colors: {
+        'brand-primary': '#D97706',
+        'brand-accent': '#FEF3C7',
+        'neutral-background': '#FFFFFF',
+        'text-primary': '#1F2937',
+        'text-secondary': '#4B5563',
+        'neutral-dark': '#141415',
+      },
+      fontFamily: {
+        'primary': ['Inter', 'sans-serif'],
+        'display': ['Bricolage Grotesque', 'sans-serif'],
+        'accent': ['Playfair Display', 'serif'],
+      },
+      letterSpacing: {
+        'logo': '0.15em',
+        'tightest': '-0.04em',
+        'tighter': '-0.03em',
+      },
+      borderRadius: {
+        'boutique': '24px',
+        'boutique-lg': '32px',
+        'boutique-xl': '40px',
+      },
+      borderWidth: {
+        '1.6': '1.6px',
+      },
+      cursor: {
+        'paw': 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' viewBox=\'0 0 24 24\' fill=\'%23D97706\'><path d=\'M12 14c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zm-6.5-4c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5zm13 0c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5zm-11-5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm9 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z\'/></svg>") 16 16, auto',
+      }
+    }
+  }
+}</script></head>
+<body id="app-root">
+  <div class="font-primary bg-neutral-background text-text-primary min-h-screen flex flex-col w-full relative">
+    
+    <header class="fixed top-0 left-0 right-0 h-16 md:h-20 z-50 px-4 md:px-8 flex items-center justify-between pointer-events-none">
+        
+        <!-- Left: Menu Button -->
+        <div class="relative pointer-events-auto">
+            <button id="menu-trigger" class="bg-brand-accent h-10 md:h-12 px-4 md:px-6 flex items-center gap-3 rounded-full group overflow-hidden shadow-sm hover:shadow-md transition-all active:scale-95">
+                <div class="flex flex-col justify-between h-2 w-5">
+                    <span class="h-[1.5px] w-full bg-brand-primary transition-transform origin-center" id="menu-bar-1"></span>
+                    <span class="h-[1.5px] w-full bg-brand-primary transition-transform origin-center" id="menu-bar-2"></span>
+                </div>
+                <div class="hidden md:block text-split-hover text-[11px] md:text-[12px] font-bold uppercase tracking-wider text-brand-primary">
+                    <span id="menu-text-1">Menu</span>
+                    <span id="menu-text-2">Explore</span>
+                </div>
+            </button>
+
+            <!-- Expanded Menu Box (Bottom Right corner) -->
+            <div id="nav-menu-box" class="fixed bottom-6 right-4 md:right-8 w-64 md:w-80 bg-brand-accent rounded-[2rem] shadow-2xl opacity-0 translate-y-10 pointer-events-none transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden border border-brand-primary/10">
+                <div class="p-8 flex flex-col gap-6">
+                    <nav class="flex flex-col gap-4">
+                        <a href="#services-shop" class="text-2xl font-display font-bold tracking-tight hover:pl-2 transition-all text-text-primary flex items-center justify-between group/link">
+                            Services
+                            <span class="opacity-0 group-hover/link:opacity-100 transition-opacity text-brand-primary">→</span>
+                        </a>
+                        <a href="#services-shop" class="text-2xl font-display font-bold tracking-tight hover:pl-2 transition-all text-text-primary flex items-center justify-between group/link">
+                            Shop
+                            <span class="opacity-0 group-hover/link:opacity-100 transition-opacity text-brand-primary">→</span>
+                        </a>
+                        <a href="#journey-section" class="text-2xl font-display font-bold tracking-tight hover:pl-2 transition-all text-text-primary flex items-center justify-between group/link">
+                            Our Story
+                            <span class="opacity-0 group-hover/link:opacity-100 transition-opacity text-brand-primary">→</span>
+                        </a>
+                        <a href="#contact-footer" class="text-2xl font-display font-bold tracking-tight hover:pl-2 transition-all text-text-primary flex items-center justify-between group/link">
+                            Contact
+                            <span class="opacity-0 group-hover/link:opacity-100 transition-opacity text-brand-primary">→</span>
+                        </a>
+                    </nav>
+                    <div class="pt-6 border-t border-brand-primary/10 text-text-primary">
+                        <p class="text-[10px] uppercase tracking-widest opacity-60 font-bold mb-2">Socials</p>
+                        <div class="flex gap-4">
+                            <a href="#" class="text-xs font-semibold hover:text-brand-primary transition-colors">Instagram</a>
+                            <a href="#" class="text-xs font-semibold hover:text-brand-primary transition-colors">Facebook</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center: Company Name -->
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
+            <a href="/" class="font-display text-lg md:text-2xl font-bold tracking-logo text-brand-primary uppercase whitespace-nowrap">
+                <span class="md:hidden">P&amp;W.</span>
+                <span class="hidden md:inline">Paws &amp; Whiskers.</span>
+            </a>
+        </div>
+
+        <!-- Right: Project Button -->
+        <div class="pointer-events-auto">
+            <button data-trigger="project-overlay" class="bg-brand-accent h-10 md:h-12 px-4 md:px-6 flex items-center rounded-full group overflow-hidden shadow-sm hover:shadow-md transition-all active:scale-95">
+                <div class="hidden md:block text-split-hover text-[11px] md:text-[12px] font-bold uppercase tracking-wider text-brand-primary pointer-events-none">
+                    <span>Book a visit</span>
+                    <span>Let's talk</span>
+                </div>
+                <div class="md:hidden text-brand-primary">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                </div>
+            </button>
+        </div>
+    </header>
+
+    <!-- Project Overlay -->
+    <div id="project-overlay" class="fixed inset-0 z-[60] bg-white translate-y-full transition-transform duration-700 ease-[cubic-bezier(0.85,0,0.15,1)] overflow-y-auto">
+        <div class="flex flex-col min-h-screen">
+            <div class="p-4 md:p-8 flex justify-end sticky top-0 bg-white z-10">
+                <button data-close="project-overlay" class="w-12 h-12 rounded-full border border-brand-primary flex items-center justify-center hover:bg-brand-primary hover:text-white transition-colors">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <div class="flex-grow flex items-center justify-center px-6">
+                <div class="max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 py-12">
+                    <a href="#" class="group flex flex-col gap-6 no-underline text-text-primary p-8 rounded-[40px] transition-colors hover:bg-brand-accent/30 border-1.6 border-transparent hover:border-brand-primary/20">
+                        <p class="italic-style text-[28px] md:text-[32px] font-light leading-none text-brand-primary">Grooming &amp; Care</p>
+                        <div class="flex flex-col">
+                            <h2 class="text-[44px] md:text-[72px] font-display font-bold leading-[0.9] tracking-tighter text-text-primary">
+                                <span class="block">Ready for a</span>
+                                <span class="block">spa day?</span>
+                            </h2>
+                        </div>
+                        <p class="text-[18px] md:text-[20px] font-light leading-[1.4] max-w-[340px] text-text-secondary">
+                            Schedule a master grooming session or wellness consultation for your beloved companion.
+                        </p>
+                        <div class="mt-4 w-12 h-12 rounded-full border border-brand-primary flex items-center justify-center group-hover:bg-brand-primary group-hover:text-white transition-all">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="transform group-hover:rotate-45 transition-transform">
+                                <path d="M1 17L17 1M17 1H1M17 1V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </div>
+                    </a>
+
+                    <a href="#" class="group flex flex-col gap-6 no-underline text-text-primary p-8 rounded-[40px] transition-colors hover:bg-neutral-50 border-1.6 border-transparent hover:border-brand-primary/20">
+                        <p class="italic-style text-[28px] md:text-[32px] font-light leading-none text-brand-primary">Luxury Concierge</p>
+                        <div class="flex flex-col">
+                            <h2 class="text-[44px] md:text-[72px] font-display font-bold leading-[0.9] tracking-tighter text-text-primary">
+                                <span class="block">Got a unique</span>
+                                <span class="block">request?</span>
+                            </h2>
+                        </div>
+                        <p class="text-[18px] md:text-[20px] font-light leading-[1.4] max-w-[340px] text-text-secondary">
+                            From designer custom orders to specialized boarding needs—we're here to help.
+                        </p>
+                        <div class="mt-4 w-12 h-12 rounded-full border border-brand-primary flex items-center justify-center group-hover:bg-brand-primary group-hover:text-white transition-all">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="transform group-hover:rotate-45 transition-transform">
+                                <path d="M1 17L17 1M17 1H1M17 1V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="flex-grow pt-20"><div class="relative w-full">
+  <div class="absolute inset-0 bg-pattern-overlay pointer-events-none z-0"></div>
+
+  <section class="relative z-10 max-w-[1505px] mx-auto py-12 px-4">
+    <div class="flex flex-col md:flex-row w-full min-h-[689px] border-t border-brand-primary/10 pt-4">
+      
+      <!-- Left Column: Image Slider -->
+      <div class="w-full md:w-[32%] h-[689px] overflow-hidden rounded-l-3xl md:rounded-none relative" id="hero-slider-left">
+        <img src="https://images.pexels.com/photos/2318990/pexels-photo-2318990.jpeg?w=600&amp;h=900&amp;fit=crop" alt="Happy dog" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100 z-10">
+        <img src="https://images.pexels.com/photos/34060703/pexels-photo-34060703.jpeg?w=600&amp;h=900&amp;fit=crop" alt="Happy golden retriever" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0 z-0">
+        <img src="https://images.pexels.com/photos/9102181/pexels-photo-9102181.jpeg?w=600&amp;h=900&amp;fit=crop" alt="Cute puppy sitting" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0 z-0">
+      </div>
+
+      <!-- Center Column: Text Content -->
+      <div class="w-full md:w-[36%] h-[689px] bg-brand-accent flex flex-col items-center justify-center px-10 text-center relative overflow-hidden">
+        <div id="parallax-text-container" class="space-y-10 will-change-transform">
+          <span class="text-brand-primary font-bold tracking-widest uppercase text-sm block">Treats &amp; Gear</span>
+          <h2 class="text-3xl lg:text-4xl font-display font-bold leading-tight text-brand-primary max-w-[380px]" data-animation-on-scroll="">
+            Premium Care For Your Furry Best Friends
+          </h2>
+          <p class="text-text-secondary text-lg max-w-[320px] mx-auto" data-animation-on-scroll="">
+            Discover curated collections of organic treats, designer toys, and luxury accessories.
+          </p>
+          <div class="flex justify-center">
+            <a href="#shop" class="inline-flex items-center justify-center w-[180px] h-[54px] bg-brand-primary text-white text-[16px] font-bold hover:bg-white hover:text-brand-primary border-2 border-brand-primary transition-all duration-300 shadow-lg rounded-full" data-animation-on-scroll="">
+              Shop Collection
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Image Slider -->
+      <div class="w-full md:w-[32%] h-[689px] overflow-hidden rounded-r-3xl md:rounded-none relative" id="hero-slider-right">
+        <img src="https://images.pexels.com/photos/33346673/pexels-photo-33346673.jpeg?w=600&amp;h=900&amp;fit=crop" alt="Luxury cat accessories" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100 z-10">
+        <img src="https://images.pexels.com/photos/10292640/pexels-photo-10292640.jpeg?w=600&amp;h=900&amp;fit=crop" alt="Designer cat furniture" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0 z-0">
+        <img src="https://images.pexels.com/photos/7309472/pexels-photo-7309472.jpeg?w=600&amp;h=900&amp;fit=crop" alt="Premium pet treats" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0 z-0">
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Merged Services & Boutique Section -->
+<section id="services-shop" class="py-24 px-6 bg-white overflow-hidden relative">
+  <div class="max-w-7xl mx-auto">
+    <!-- Pill Header -->
+    <div class="bg-brand-accent rounded-[20px] px-8 py-4 flex flex-col md:flex-row justify-between items-center text-brand-primary font-display font-bold text-sm tracking-widest uppercase mb-6" data-animation-on-scroll="">
+      <span>Paws &amp; Whiskers Excellence</span>
+      <a href="#contact" class="hover:underline mt-2 md:mt-0">Book Appointment</a>
+    </div>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-[320px_1fr_340px] gap-6 items-stretch">
+      
+      <!-- Left: Services Features List -->
+      <div class="grid grid-cols-2 lg:grid-cols-1 gap-4 h-full">
+        <!-- Feature 1 -->
+        <div class="bg-brand-accent/30 rounded-[24px] p-6 flex flex-col justify-between h-full min-h-[180px] group hover:bg-brand-accent transition-colors duration-300" data-animation-on-scroll="">
+          <div class="text-brand-primary text-2xl mb-4 group-hover:scale-110 transition-transform">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+          </div>
+          <div>
+            <h4 class="font-display text-base leading-tight mb-2 uppercase font-bold text-text-primary">Master<br>Grooming</h4>
+            <p class="text-xs text-text-secondary leading-relaxed">Expert styling using organic, pH-balanced apothecary blends.</p>
+          </div>
+        </div>
+        <!-- Feature 2 -->
+        <div class="bg-brand-accent/30 rounded-[24px] p-6 flex flex-col justify-between h-full min-h-[180px] group hover:bg-brand-accent transition-colors duration-300" data-animation-on-scroll="">
+          <div class="text-brand-primary text-2xl mb-4 group-hover:scale-110 transition-transform">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          </div>
+          <div>
+            <h4 class="font-display text-base leading-tight mb-2 uppercase font-bold text-text-primary">Luxury<br>Boarding</h4>
+            <p class="text-xs text-text-secondary leading-relaxed">Individual climate-controlled suites with 24/7 personalized care.</p>
+          </div>
+        </div>
+        <!-- Feature 3 -->
+        <div class="bg-brand-accent/30 rounded-[24px] p-6 flex flex-col justify-between h-full min-h-[180px] group hover:bg-brand-accent transition-colors duration-300" data-animation-on-scroll="">
+          <div class="text-brand-primary text-2xl mb-4 group-hover:scale-110 transition-transform">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+          </div>
+          <div>
+            <h4 class="font-display text-base leading-tight mb-2 uppercase font-bold text-text-primary">Pet<br>Wellness</h4>
+            <p class="text-xs text-text-secondary leading-relaxed">Therapeutic massage and holistic nutrition consulting for vitality.</p>
+          </div>
+        </div>
+        <!-- Feature 4 -->
+        <div class="bg-brand-accent/30 rounded-[24px] p-6 flex flex-col justify-between h-full min-h-[180px] group hover:bg-brand-accent transition-colors duration-300" data-animation-on-scroll="">
+          <div class="text-brand-primary text-2xl mb-4 group-hover:scale-110 transition-transform">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          </div>
+          <div>
+            <h4 class="font-display text-base leading-tight mb-2 uppercase font-bold text-text-primary">Elite<br>Concierge</h4>
+            <p class="text-xs text-text-secondary leading-relaxed">Custom orders and specialized needs for the discerning pet parent.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center: Illustration/Featured Image -->
+      <div class="bg-brand-accent rounded-[32px] overflow-hidden relative min-h-[400px] h-full group" data-animation-on-scroll="">
+        <img src="https://images.pexels.com/photos/6816858/pexels-photo-6816858.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" alt="Pet Spa Day">
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-primary/40 to-transparent"></div>
+        <div class="absolute bottom-10 left-10 text-white">
+          <p class="italic-style text-2xl mb-2">Treat them to gold.</p>
+          <h3 class="font-display text-4xl font-bold uppercase">The Boutique Standard</h3>
+        </div>
+      </div>
+
+      <!-- Right: Boutique Shop Highlights -->
+      <div class="flex flex-col gap-4 h-full">
+        <div class="bg-brand-accent/20 rounded-[24px] p-6 flex items-center gap-6 flex-1 group hover:bg-brand-accent/40 transition-all" data-animation-on-scroll="">
+          <div class="w-20 h-20 rounded-full overflow-hidden bg-white flex-shrink-0 shadow-md">
+            <img src="https://images.pexels.com/photos/7053881/pexels-photo-7053881.jpeg?w=200&amp;h=200&amp;fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform" alt="Heritage Leather Collar">
+          </div>
+          <div>
+            <h4 class="font-display text-sm font-bold uppercase text-text-primary">Heritage Leather Collar</h4>
+            <p class="text-xs text-brand-primary font-bold mt-1">$125.00</p>
+            <button class="text-[10px] uppercase tracking-widest font-bold mt-2 hover:text-text-primary transition-colors">Add to Cart +</button>
+          </div>
+        </div>
+        <div class="bg-brand-accent/20 rounded-[24px] p-6 flex items-center gap-6 flex-1 group hover:bg-brand-accent/40 transition-all" data-animation-on-scroll="">
+          <div class="w-20 h-20 rounded-full overflow-hidden bg-white flex-shrink-0 shadow-md">
+            <img src="https://images.pexels.com/photos/19884207/pexels-photo-19884207.png?w=200&amp;h=200&amp;fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform" alt="Stone Artisan Bowl">
+          </div>
+          <div>
+            <h4 class="font-display text-sm font-bold uppercase text-text-primary">Stone Artisan Bowl</h4>
+            <p class="text-xs text-brand-primary font-bold mt-1">$45.00</p>
+            <button class="text-[10px] uppercase tracking-widest font-bold mt-2 hover:text-text-primary transition-colors">Add to Cart +</button>
+          </div>
+        </div>
+        <div class="bg-brand-accent/20 rounded-[24px] p-6 flex items-center gap-6 flex-1 group hover:bg-brand-accent/40 transition-all" data-animation-on-scroll="">
+          <div class="w-20 h-20 rounded-full overflow-hidden bg-white flex-shrink-0 shadow-md">
+            <img src="https://images.pexels.com/photos/31517777/pexels-photo-31517777.jpeg?w=200&amp;h=200&amp;fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform" alt="Cloud Nine Velvet Bed">
+          </div>
+          <div>
+            <h4 class="font-display text-sm font-bold uppercase text-text-primary">Cloud Nine Velvet Bed</h4>
+            <p class="text-xs text-brand-primary font-bold mt-1">$280.00</p>
+            <button class="text-[10px] uppercase tracking-widest font-bold mt-2 hover:text-text-primary transition-colors">Add to Cart +</button>
+          </div>
+        </div>
+        <div class="bg-brand-accent/20 rounded-[24px] p-6 flex items-center gap-6 flex-1 group hover:bg-brand-accent/40 transition-all" data-animation-on-scroll="">
+          <div class="w-20 h-20 rounded-full overflow-hidden bg-white flex-shrink-0 shadow-md">
+            <img src="https://images.pexels.com/photos/7368026/pexels-photo-7368026.jpeg?w=200&amp;h=200&amp;fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform" alt="Amber Gold Treats">
+          </div>
+          <div>
+            <h4 class="font-display text-sm font-bold uppercase text-text-primary">Amber Gold Treats</h4>
+            <p class="text-xs text-brand-primary font-bold mt-1">$35.00</p>
+            <button class="text-[10px] uppercase tracking-widest font-bold mt-2 hover:text-text-primary transition-colors">Add to Cart +</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Innovative Journey Section (Horizontal Scroll) -->
+<section id="journey-section" class="relative bg-white">
+  <div class="journey-scroll-container h-[300vh] relative">
+    <div class="sticky top-0 h-screen overflow-hidden flex items-center">
+      <div class="journey-track flex items-center px-[5vw] gap-[10vw] will-change-transform h-full">
+        
+        <!-- Intro Step -->
+        <div class="journey-step flex-shrink-0 w-[70vw] md:w-[45vw] max-w-3xl">
+          <div class="space-y-6">
+            <span class="text-brand-primary font-bold tracking-[0.2em] uppercase text-xs block">Chapter I</span>
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-text-primary leading-tight">The Vision of Eleanor Vance.</h2>
+            <p class="text-text-secondary text-lg md:text-xl leading-relaxed max-w-2xl">
+              In 2012, Eleanor Vance noticed a gap in the world of pet care—the missing touch of accessible luxury. Paws &amp; Whiskers was born from a simple promise: Every pet is royalty.
+            </p>
+            <div class="flex items-center gap-4 text-brand-primary font-bold">
+              <span class="text-3xl">2012</span>
+              <div class="w-24 h-[2px] bg-brand-primary"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="journey-step flex-shrink-0 w-[75vw] md:w-[55vw] flex flex-col md:flex-row items-center gap-8">
+          <div class="w-full md:w-1/2 aspect-square rounded-[32px] overflow-hidden shadow-xl">
+            <img src="https://images.pexels.com/photos/6816858/pexels-photo-6816858.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Master Grooming" class="w-full h-full object-cover">
+          </div>
+          <div class="w-full md:w-1/2 space-y-4">
+            <span class="text-brand-primary font-bold tracking-[0.2em] uppercase text-xs block">Chapter II</span>
+            <h3 class="font-display text-3xl md:text-4xl font-bold text-text-primary">Mastering the Art of Grooming.</h3>
+            <p class="text-text-secondary text-base leading-relaxed">
+              By 2015, we pioneered the "Calm-First" methodology. We traded cages for open-air suites and standard soaps for organic, boutique apothecary blends.
+            </p>
+            <div class="flex items-center gap-4 text-brand-primary font-bold">
+              <span class="text-3xl">2015</span>
+              <div class="w-24 h-[2px] bg-brand-primary"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="journey-step flex-shrink-0 w-[75vw] md:w-[55vw] flex flex-col md:flex-row-reverse items-center gap-8">
+          <div class="w-full md:w-1/2 aspect-square rounded-[32px] overflow-hidden shadow-xl">
+            <img src="https://images.pexels.com/photos/5435552/pexels-photo-5435552.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Boutique Shop" class="w-full h-full object-cover">
+          </div>
+          <div class="w-full md:w-1/2 space-y-4">
+            <span class="text-brand-primary font-bold tracking-[0.2em] uppercase text-xs block">Chapter III</span>
+            <h3 class="font-display text-3xl md:text-4xl font-bold text-text-primary">The Boutique Collection.</h3>
+            <p class="text-text-secondary text-base leading-relaxed">
+              Curating high-end essentials became our mission. We traveled the globe to find artisan bowl-makers and heritage leather craftsmen, bringing the world's best to your doorstep.
+            </p>
+            <div class="flex items-center gap-4 text-brand-primary font-bold">
+              <span class="text-3xl">2019</span>
+              <div class="w-24 h-[2px] bg-brand-primary"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Conclusion Step -->
+        <div class="journey-step flex-shrink-0 w-[70vw] md:w-[45vw] pr-[5vw]">
+          <div class="bg-brand-accent p-10 md:p-14 rounded-[32px] boutique-border space-y-6 relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-40 h-40 bg-brand-primary/10 rounded-full blur-3xl"></div>
+            <span class="text-brand-primary font-bold tracking-[0.2em] uppercase text-xs block">The Present</span>
+            <h3 class="font-display text-3xl md:text-4xl font-bold text-brand-primary">A Legacy Continued.</h3>
+            <p class="text-text-secondary text-lg">
+              Today, Paws &amp; Whiskers serves thousands of families. We remain dedicated to the idea that care should be beautiful, intentional, and forever boutique.
+            </p>
+            <a href="#contact" class="inline-flex items-center gap-3 bg-brand-primary text-white px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform shadow-lg">
+              Join the Circle
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Innovative Vertical Testimonials Section -->
+<section id="testimonials-section" class="py-24 bg-brand-accent/30 overflow-hidden relative">
+  <!-- Title Area -->
+  <div class="flex flex-col items-center gap-8 max-w-7xl mx-auto px-6 z-10 text-center mb-16" data-animation-on-scroll="">
+    <div class="flex items-center gap-2 px-4 py-2 rounded-full border border-brand-primary/10 bg-white shadow-sm hover:shadow-md transition-shadow">
+      <div class="flex items-center gap-0.5">
+        <svg class="w-3.5 h-3.5 text-brand-primary fill-current" viewBox="0 0 256 256"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path></svg>
+        <svg class="w-3.5 h-3.5 text-brand-primary fill-current" viewBox="0 0 256 256"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path></svg>
+        <svg class="w-3.5 h-3.5 text-brand-primary fill-current" viewBox="0 0 256 256"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path></svg>
+        <svg class="w-3.5 h-3.5 text-brand-primary fill-current" viewBox="0 0 256 256"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path></svg>
+        <svg class="w-3.5 h-3.5 text-brand-primary fill-current" viewBox="0 0 256 256"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path></svg>
+      </div>
+      <span class="font-display font-bold text-sm text-text-primary tracking-widest uppercase">5.0 Boutique Rating</span>
+    </div>
+    <h2 class="font-display text-4xl md:text-5xl font-bold leading-[1.1] tracking-tighter text-text-primary max-w-[700px]">
+      Voices from the P&amp;W Circle
+    </h2>
+  </div>
+
+  <!-- Vertical Scrolling Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-7xl mx-auto h-[700px] mask-testimonial px-6">
+    
+    <!-- Column 1 (Scroll Up) -->
+    <div class="relative overflow-hidden h-full">
+      <ul class="flex flex-col gap-4 animate-scroll-v hover:[animation-play-state:paused]">
+        <!-- Testimonial 1 -->
+        <li class="p-8 bg-white rounded-boutique h-[260px] flex flex-col justify-between shadow-sm border border-brand-primary/5">
+          <p class="text-sm text-text-secondary leading-relaxed italic">"The level of care here is unprecedented. Bella always returns from her spa sessions looking like royalty."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://images.pexels.com/photos/9883386/pexels-photo-9883386.jpeg?w=100&amp;h=100&amp;fit=crop" class="w-10 h-10 rounded-full object-cover">
+            <div>
+              <p class="font-bold text-sm text-text-primary">Sarah Jenkins</p>
+              <p class="text-xs text-brand-primary font-bold uppercase tracking-widest">Bella's Guardian</p>
+            </div>
+          </div>
+        </li>
+        <!-- Testimonial 2 -->
+        <li class="p-8 bg-white rounded-boutique h-[260px] flex flex-col justify-between shadow-sm border border-brand-primary/5">
+          <p class="text-sm text-text-secondary leading-relaxed italic">"Curated treats that my picky companion actually enjoys. The boutique selection is truly top-tier."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?w=100&amp;h=100&amp;fit=crop" class="w-10 h-10 rounded-full object-cover">
+            <div>
+              <p class="font-bold text-sm text-text-primary">Marcus Thorne</p>
+              <p class="text-xs text-brand-primary font-bold uppercase tracking-widest">Oliver's Human</p>
+            </div>
+          </div>
+        </li>
+        <!-- LOOP -->
+        <li class="p-8 bg-white rounded-boutique h-[260px] flex flex-col justify-between shadow-sm border border-brand-primary/5">
+          <p class="text-sm text-text-secondary leading-relaxed italic">"The level of care here is unprecedented. Bella always returns from her spa sessions looking like royalty."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://images.pexels.com/photos/9883386/pexels-photo-9883386.jpeg?w=100&amp;h=100&amp;fit=crop" class="w-10 h-10 rounded-full object-cover">
+            <div><p class="font-bold text-sm">Sarah Jenkins</p></div>
+          </div>
+        </li>
+        <li class="p-8 bg-white rounded-boutique h-[260px] flex flex-col justify-between shadow-sm border border-brand-primary/5">
+          <p class="text-sm text-text-secondary leading-relaxed italic">"Curated treats that my picky companion actually enjoys."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?w=100&amp;h=100&amp;fit=crop" class="w-10 h-10 rounded-full object-cover">
+            <div><p class="font-bold text-sm">Marcus Thorne</p></div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Column 2 (Scroll Down / Reverse) -->
+    <div class="relative overflow-hidden h-full">
+      <ul class="flex flex-col gap-4 animate-scroll-v-reverse hover:[animation-play-state:paused]">
+        <!-- Testimonial 3 -->
+        <li class="p-8 bg-brand-accent rounded-boutique h-[260px] flex flex-col justify-between shadow-sm border border-brand-primary/20">
+          <p class="text-sm text-text-primary leading-relaxed font-bold">"Paws &amp; Whiskers is the only place I trust with Shadow's grooming needs. They are literal magicians."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://images.pexels.com/photos/1181691/pexels-photo-1181691.jpeg?w=100&amp;h=100&amp;fit=crop" class="w-10 h-10 rounded-full object-cover">
+            <div>
+              <p class="font-bold text-sm text-text-primary">Thomas Ward</p>
+              <p class="text-xs text-brand-primary uppercase font-bold tracking-widest">Shadow's Best Friend</p>
+            </div>
+          </div>
+        </li>
+        <!-- Image Card -->
+        <li class="relative rounded-boutique h-[260px] overflow-hidden group cursor-pointer">
+          <img src="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=600" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute inset-0 bg-brand-primary/20 flex items-end p-6">
+            <span class="text-white font-display font-bold uppercase tracking-widest text-xs">Pet Portraits MMXXIV</span>
+          </div>
+        </li>
+        <!-- LOOP -->
+        <li class="p-8 bg-brand-accent rounded-boutique h-[260px] flex flex-col justify-between shadow-sm border border-brand-primary/20">
+          <p class="text-sm text-text-primary leading-relaxed font-bold">"The magicians of pet care."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://images.pexels.com/photos/1181691/pexels-photo-1181691.jpeg?w=100&amp;h=100&amp;fit=crop" class="w-10 h-10 rounded-full object-cover">
+            <div><p class="font-bold text-sm">Thomas Ward</p></div>
+          </div>
+        </li>
+        <li class="relative rounded-boutique h-[260px] overflow-hidden">
+            <img src="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=600" class="absolute inset-0 w-full h-full object-cover">
+        </li>
+      </ul>
+    </div>
+
+    <!-- Column 3 (Scroll Up) -->
+    <div class="relative overflow-hidden h-full hidden md:block">
+      <ul class="flex flex-col gap-4 animate-scroll-v hover:[animation-play-state:paused]">
+        <!-- Testimonial 4 -->
+        <li class="p-8 bg-white rounded-boutique h-[260px] flex flex-col justify-between shadow-sm border border-brand-primary/5">
+          <p class="text-sm text-text-secondary leading-relaxed italic">"The artisan accessories collection is unmatched. Every piece feels custom-made for our home."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?w=100&amp;h=100&amp;fit=crop" class="w-10 h-10 rounded-full object-cover">
+            <div>
+              <p class="font-bold text-sm text-text-primary">Julian Pierce</p>
+              <p class="text-xs text-brand-primary font-bold uppercase tracking-widest">Baron's Owner</p>
+            </div>
+          </div>
+        </li>
+        <!-- Step Step Card -->
+        <li class="p-8 bg-brand-primary rounded-boutique h-[260px] flex flex-col justify-center items-center text-center text-white">
+          <span class="text-3xl mb-4">✨</span>
+          <p class="font-display font-bold uppercase tracking-widest text-sm">Next Generation Pet Boutique</p>
+        </li>
+        <!-- LOOP -->
+        <li class="p-8 bg-white rounded-boutique h-[260px] flex flex-col justify-between shadow-sm border border-brand-primary/5">
+          <p class="text-sm italic">"Every piece feels custom-made."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?w=100&amp;h=100&amp;fit=crop" class="w-10 h-10 rounded-full object-cover">
+            <div><p class="font-bold text-sm">Julian Pierce</p></div>
+          </div>
+        </li>
+        <li class="p-8 bg-brand-primary h-[260px] rounded-boutique flex items-center justify-center text-white font-display font-bold">THE CIRCLE</li>
+      </ul>
+    </div>
+
+    <!-- Column 4 (Scroll Down) -->
+    <div class="relative overflow-hidden h-full hidden lg:block">
+      <ul class="flex flex-col gap-4 animate-scroll-v-reverse hover:[animation-play-state:paused]">
+        <!-- Testimonial 5 -->
+        <li class="p-8 bg-white rounded-boutique h-[260px] flex flex-col justify-between shadow-sm border border-brand-primary/5">
+          <p class="text-sm text-text-secondary leading-relaxed italic">"Holistic care that actually respects the pet. Cooper looks amazing and didn't have any stress."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://images.pexels.com/photos/1181682/pexels-photo-1181682.jpeg?w=100&amp;h=100&amp;fit=crop" class="w-10 h-10 rounded-full object-cover">
+            <div>
+              <p class="font-bold text-sm text-text-primary">Chloe Smith</p>
+              <p class="text-xs text-brand-primary font-bold uppercase tracking-widest">Cooper's Mom</p>
+            </div>
+          </div>
+        </li>
+        <!-- Image Card -->
+        <li class="relative rounded-boutique h-[260px] overflow-hidden group cursor-pointer">
+          <img src="https://images.pexels.com/photos/16623514/pexels-photo-16623514/free-photo-of-cat-in-a-cat-tree.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=600" class="absolute inset-0 w-full h-full object-cover">
+          <div class="absolute inset-0 bg-black/30 flex flex-col justify-between p-6">
+            <div class="flex justify-end">
+               <span class="italic-style text-white text-xl">luna.</span>
+            </div>
+            <div>
+               <p class="text-white font-bold text-sm">Lumina Collection</p>
+               <p class="text-white/70 text-[10px] uppercase font-bold tracking-widest">Luxury Cat Furnishings</p>
+            </div>
+          </div>
+        </li>
+        <!-- LOOP -->
+        <li class="p-8 bg-white rounded-boutique h-[260px] flex flex-col justify-between shadow-sm border border-brand-primary/5">
+          <p class="text-sm italic">"Cooper looks amazing and didn't have any stress."</p>
+          <div class="flex items-center gap-3">
+            <img src="https://images.pexels.com/photos/1181682/pexels-photo-1181682.jpeg?w=100&amp;h=100&amp;fit=crop" class="w-10 h-10 rounded-full object-cover">
+            <div><p class="font-bold text-sm">Chloe Smith</p></div>
+          </div>
+        </li>
+        <li class="relative rounded-boutique h-[260px] overflow-hidden">
+            <img src="https://images.pexels.com/photos/16623514/pexels-photo-16623514/free-photo-of-cat-in-a-cat-tree.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=600" class="absolute inset-0 w-full h-full object-cover">
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Hero Slider Logic
+    const setupSlider = (containerId) => {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      const images = container.querySelectorAll('img');
+      let currentIndex = 0;
+
+      setInterval(() => {
+        images[currentIndex].classList.remove('opacity-100', 'z-10');
+        images[currentIndex].classList.add('opacity-0', 'z-0');
+        currentIndex = (currentIndex + 1) % images.length;
+        images[currentIndex].classList.remove('opacity-0', 'z-0');
+        images[currentIndex].classList.add('opacity-100', 'z-10');
+      }, 5000);
+    };
+
+    setupSlider('hero-slider-left');
+    setupSlider('hero-slider-right');
+
+    // Parallax Effect
+    const parallaxText = document.getElementById('parallax-text-container');
+    if (parallaxText) {
+      window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const parent = parallaxText.parentElement;
+        const parentRect = parent.getBoundingClientRect();
+        
+        if (parentRect.top < window.innerHeight && parentRect.bottom > 0) {
+          const relativeScroll = window.innerHeight / 2 - (parentRect.top + parentRect.height / 2);
+          const movement = relativeScroll * 0.1;
+          parallaxText.style.transform = `translateY(${movement}px)`;
+        }
+      });
+    }
+
+    // Journey Horizontal Scroll Logic
+    const journeySection = document.getElementById('journey-section');
+    const journeyTrack = journeySection?.querySelector('.journey-track');
+    const scrollContainer = journeySection?.querySelector('.journey-scroll-container');
+
+    if (journeyTrack && scrollContainer) {
+      const updateJourneyScroll = () => {
+        const rect = scrollContainer.getBoundingClientRect();
+        const scrollStart = 0;
+        const scrollEnd = scrollContainer.offsetHeight - window.innerHeight;
+        
+        // Calculate progress (0 to 1) based on sticky container position
+        let progress = -rect.top / scrollEnd;
+        progress = Math.max(0, Math.min(1, progress));
+
+        const maxTranslate = journeyTrack.scrollWidth - window.innerWidth;
+        journeyTrack.style.transform = `translateX(${-progress * maxTranslate}px)`;
+      };
+
+      window.addEventListener('scroll', updateJourneyScroll);
+      window.addEventListener('resize', updateJourneyScroll);
+    }
+
+    // Anchor Link Smooth Scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  });
+</script></main>
+
+    <!-- Integrated Footer & CTA "Canvas" Section -->
+    <footer id="contact-footer" class="bg-neutral-background pt-24 pb-12 md:pt-32 md:pb-16 px-4 md:px-8">
+      <div class="max-w-[1200px] mx-auto relative">
+        
+        <!-- Main Brand Card -->
+        <div class="relative w-full bg-brand-primary rounded-[32px] md:rounded-[48px] flex flex-col items-start justify-between px-8 md:px-16 pt-12 md:pt-16 pb-10 md:pb-12 overflow-hidden shadow-2xl z-10 min-h-[400px] md:min-h-[480px]">
+          
+          <div class="absolute inset-0 bg-pattern-overlay opacity-10"></div>
+          
+          <!-- Brand Identity -->
+          <div class="w-full flex justify-between items-start relative z-20">
+            <div>
+              <a href="#" class="block">
+                <div class="font-display text-4xl md:text-5xl font-bold text-white leading-none tracking-tightest uppercase">
+                  P&amp;W.
+                </div>
+                <div class="text-[10px] font-bold text-white/70 uppercase tracking-[0.3em] mt-3">
+                  SINCE MMXXII
+                </div>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Spacer for height -->
+          <div class="flex-grow"></div>
+
+          <!-- Giant Jumping Typography -->
+          <div class="absolute inset-x-0 bottom-4 md:bottom-6 px-8 md:px-16 pointer-events-none z-0">
+            <h1 class="text-[90px] sm:text-[120px] md:text-[clamp(90px,16vw,180px)] font-bold text-white/15 leading-[0.8] tracking-tighter select-none animate-jump flex gap-[0.02em]">
+              <span>P</span><span>A</span><span>W</span><span>S</span><span>.</span>
+            </h1>
+          </div>
+
+          <!-- Legal & Copy -->
+          <div class="relative z-20 w-full flex flex-col md:flex-row justify-between items-end gap-4 mt-8">
+            <p class="text-white/60 text-xs font-medium uppercase tracking-widest">© 2024 Paws &amp; Whiskers Circle</p>
+            <div class="flex gap-6">
+              <a href="#" class="text-white/60 hover:text-white transition-colors text-xs font-medium uppercase tracking-widest">Privacy</a>
+              <a href="#" class="text-white/60 hover:text-white transition-colors text-xs font-medium uppercase tracking-widest">Terms</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Overlapping Floating Contact Card -->
+        <div data-animation-on-scroll="" class="absolute -top-10 md:-top-16 right-4 md:right-8 w-[92%] sm:w-[75%] md:w-[480px] bg-brand-accent rounded-[32px] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)] p-8 md:p-12 z-50 border border-brand-primary/20">
+          <div class="flex flex-col gap-10">
+            <!-- Navigation Links -->
+            <div class="grid grid-cols-2 gap-8">
+              <div class="flex flex-col gap-4">
+                <h5 class="text-[10px] font-bold text-brand-primary uppercase tracking-[0.2em]">The Circle</h5>
+                <ul class="flex flex-col gap-2.5">
+                  <li><a href="#services-shop" class="text-sm font-bold text-text-primary hover:text-brand-primary transition-colors">Our Services</a></li>
+                  <li><a href="#services-shop" class="text-sm font-bold text-text-primary hover:text-brand-primary transition-colors">Boutique Shop</a></li>
+                  <li><a href="#journey-section" class="text-sm font-bold text-text-primary hover:text-brand-primary transition-colors">Our Story</a></li>
+                </ul>
+              </div>
+
+              <div class="flex flex-col gap-4">
+                <h5 class="text-[10px] font-bold text-brand-primary uppercase tracking-[0.2em]">Connect</h5>
+                <ul class="flex flex-col gap-2.5">
+                  <li><a href="#" class="text-sm font-bold text-text-primary hover:text-brand-primary transition-colors">Instagram</a></li>
+                  <li><a href="#" class="text-sm font-bold text-text-primary hover:text-brand-primary transition-colors">Facebook</a></li>
+                  <li><a href="#" class="text-sm font-bold text-text-primary hover:text-brand-primary transition-colors">LinkedIn</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="w-full flex flex-col gap-6 border-t border-brand-primary/10 pt-8">
+              <h5 class="text-[10px] font-bold text-brand-primary uppercase tracking-[0.2em]">Inquiries</h5>
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                <p class="text-lg md:text-xl font-display font-bold text-text-primary leading-tight max-w-[200px]">Ready to elevate your pet's lifestyle?</p>
+                <a href="#" class="inline-flex items-center justify-center gap-2 bg-brand-primary text-white px-8 py-4 rounded-full text-sm font-bold shadow-xl hover:brightness-110 hover:-translate-y-1 transition-all duration-300">
+                  Book Visit
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Intersection Observer for scroll animations
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-on-scroll-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('[data-animation-on-scroll]').forEach(el => {
+        el.classList.add('animate-on-scroll-hidden');
+        observer.observe(el);
+      });
+
+      // Navigation Logic
+      const projectOverlay = document.getElementById('project-overlay');
+      const navMenuBox = document.getElementById('nav-menu-box');
+      const menuTrigger = document.getElementById('menu-trigger');
+      const bar1 = document.getElementById('menu-bar-1');
+      const bar2 = document.getElementById('menu-bar-2');
+      const menuText1 = document.getElementById('menu-text-1');
+      const menuText2 = document.getElementById('menu-text-2');
+
+      let isMenuOpen = false;
+
+      const toggleMenu = (e) => {
+          if(e) e.stopPropagation();
+          isMenuOpen = !isMenuOpen;
+          
+          if (isMenuOpen) {
+              navMenuBox.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+              navMenuBox.classList.add('opacity-100', 'translate-y-0');
+              bar1.style.transform = 'translateY(3.5px) rotate(45deg)';
+              bar2.style.transform = 'translateY(-3.5px) rotate(-45deg)';
+              if(menuText1) menuText1.textContent = 'Close';
+              if(menuText2) menuText2.textContent = 'Back';
+          } else {
+              navMenuBox.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+              navMenuBox.classList.remove('opacity-100', 'translate-y-0');
+              bar1.style.transform = 'none';
+              bar2.style.transform = 'none';
+              if(menuText1) menuText1.textContent = 'Menu';
+              if(menuText2) menuText2.textContent = 'Explore';
+          }
+      };
+
+      const openOverlay = () => {
+          projectOverlay.classList.remove('translate-y-full');
+          document.body.style.overflow = 'hidden';
+          if(isMenuOpen) toggleMenu();
+      };
+
+      const closeOverlay = () => {
+          projectOverlay.classList.add('translate-y-full');
+          document.body.style.overflow = '';
+      };
+
+      document.addEventListener('click', (e) => {
+          if (e.target.closest('[data-trigger="project-overlay"]')) {
+              openOverlay();
+          }
+          if (e.target.closest('[data-close="project-overlay"]')) {
+              closeOverlay();
+          }
+          if (e.target.closest('#menu-trigger')) {
+              toggleMenu(e);
+          } else if (isMenuOpen && !navMenuBox.contains(e.target)) {
+              toggleMenu(e);
+          }
+      });
+
+      window.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+              if (!projectOverlay.classList.contains('translate-y-full')) closeOverlay();
+              if (isMenuOpen) toggleMenu();
+          }
+      });
+      
+      // Smooth Scroll for anchor links inside the menu
+      document.querySelectorAll('#nav-menu-box a[href^="#"], .max-w-\[1200px\] a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+              e.preventDefault();
+              if(isMenuOpen) toggleMenu();
+              const target = document.querySelector(this.getAttribute('href'));
+              if (target) {
+                  window.scrollTo({
+                      top: target.offsetTop - 80,
+                      behavior: 'smooth'
+                  });
+              }
+          });
+      });
+    });
+  </script>
+
+</body></html>

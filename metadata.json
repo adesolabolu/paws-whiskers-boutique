@@ -1,0 +1,6 @@
+{
+  "name": "Paws & Whiskers | Premium Pet Boutique & Care",
+  "description": "Luxury pet boutique offering master grooming, climate-controlled boarding suites, holistic pet wellness, and artisan accessories.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
